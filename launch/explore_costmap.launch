@@ -23,6 +23,6 @@
   <!--变换机器人姿势时使用的变换容差。-->
   <param name="transform_tolerance" value="0.3"/>
   <!--将边界视为探索目标的边界的最小大小。以米为单位。-->
-  <param name="min_frontier_size" value="0.1"/>
+  <param name="min_frontier_size" value="0.2"/>
 </node>
 </launch>

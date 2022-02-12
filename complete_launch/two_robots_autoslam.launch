@@ -6,7 +6,9 @@
 
     <group if="$(arg simulation)" >
         <!-- 开启仿真世界 -->
-        <include file="$(find gazebo_tutorials)/launch/create_world.launch" />
+        <include file="$(find gazebo_tutorials)/launch/create_world.launch" >
+            <arg name="world_name" value="fake_bridge"/>
+        </include>
          <!-- 放置机器人 -->
         <include file="$(find gazebo_tutorials)/launch/place_robot.launch">
             <arg name="robot_x_pos" value="0.0"/>
@@ -17,7 +19,7 @@
         </include>
          <!-- 放置机器人 -->
         <include file="$(find gazebo_tutorials)/launch/place_robot.launch">
-            <arg name="robot_x_pos" value="-3"/>
+            <arg name="robot_x_pos" value="1.0"/>
             <arg name="robot_y_pos" value="0.0"/>
             <arg name="robot_z_pos" value="0.0"/>
             <arg name="robot_yaw"   value="0.0"/>
@@ -43,7 +45,7 @@
     <!-- 加入2号机器人地图信息 -->
     <include file="$(find gazebo_tutorials)/launch/map_merging.launch">
         <arg name="if_first_robot" value="False"/>
-        <arg name="robot_x_pos" value="-3"/>
+        <arg name="robot_x_pos" value="1.0"/>
         <arg name="robot_y_pos" value="0.0"/>
         <arg name="robot_z_pos" value="0.0"/>
         <arg name="robot_name" value="tb3_1"/>
