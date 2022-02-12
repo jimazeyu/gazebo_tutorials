@@ -1,0 +1,28 @@
+<launch>
+<arg name="ns"  default="tb3_0"/>
+
+<node pkg="explore_lite" type="explore" respawn="false" name="$(arg ns)_explore" output="screen">
+    <remap from="move_base_simple/goal" to="$(arg ns)/move_base_simple/goal"/>
+    <remap from="move_base" to="$(arg ns)/move_base"/>
+    
+  <param name="robot_base_frame" value="$(arg ns)/base_footprint"/>
+  <param name="costmap_topic" value="$(arg ns)/map"/>
+  <param name="costmap_updates_topic" value="$(arg ns)/map_updates"/>
+  <!--指定是否发布可视化边界-->
+  <param name="visualize" value="true"/>  
+  <!--计算新边界和重新考虑目标的频率（Hz）-->
+  <param name="planner_frequency" value="0.33"/>
+  <!--时间以秒为单位。当机器人在 progress_timeout 没有任何进展时，当前目标将被放弃。-->
+  <param name="progress_timeout" value="30.0"/>
+  <!--用于加权边界。这个乘法参数影响前沿权重的前沿潜在分量（到前沿的距离）。-->
+  <param name="potential_scale" value="3.0"/>
+  <!--用于加权边界。这个乘法参数影响前沿权重的前沿方向分量。此参数目前不执行任何操作，仅用于向前兼容。-->
+  <param name="orientation_scale" value="0.0"/>
+  <!--用于加权边界。这个乘法参数影响边界权重（边界大小）的边界增益分量。-->
+  <param name="gain_scale" value="1.0"/>
+  <!--变换机器人姿势时使用的变换容差。-->
+  <param name="transform_tolerance" value="0.3"/>
+  <!--将边界视为探索目标的边界的最小大小。以米为单位。-->
+  <param name="min_frontier_size" value="0.1"/>
+</node>
+</launch>

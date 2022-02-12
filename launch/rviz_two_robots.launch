@@ -1,0 +1,5 @@
+<launch>
+  <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find gazebo_tutorials)/rviz/two_robots.rviz"/>
+</launch>

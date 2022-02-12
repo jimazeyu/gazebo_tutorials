@@ -1,0 +1,25 @@
+<launch>
+    <!--SLAM算法 -->
+    <arg name="slam_method" default="gmapping"/>
+    <arg name="simulation" default="true"/>
+
+    <group if="$(arg simulation)" >
+        <!-- 开启仿真世界 -->
+        <include file="$(find gazebo_tutorials)/launch/create_world.launch" />
+         <!-- 放置机器人 -->
+        <include file="$(find gazebo_tutorials)/launch/place_robot.launch">
+            <arg name="robot_x_pos" value="0.0"/>
+            <arg name="robot_y_pos" value="0.0"/>
+            <arg name="robot_z_pos" value="0.0"/>
+            <arg name="robot_yaw"   value="3.14"/>
+            <arg name="robot_name" value="tb3_0"/>
+        </include>
+    </group>
+    <!-- 开启SLAM -->
+    <include file="$(find gazebo_tutorials)/slam_methods/$(arg slam_method).launch">
+        <arg name="ns" value="tb3_0"/>
+    </include>
+
+    <!-- rviz -->
+    <include file="$(find gazebo_tutorials)/launch/rviz_one_robot.launch" />
+</launch>

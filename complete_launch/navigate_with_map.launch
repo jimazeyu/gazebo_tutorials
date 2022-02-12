@@ -1,0 +1,54 @@
+<launch>
+    <!--设置参数 -->
+    <arg name="simulation" default="true"/>
+    <arg name="move_forward_only" default="false"/>
+
+    <group if="$(arg simulation)" >
+        <!-- 开启仿真世界 -->
+        <include file="$(find gazebo_tutorials)/launch/create_world.launch" />
+         <!-- 放置机器人 -->
+        <include file="$(find gazebo_tutorials)/launch/place_robot.launch">
+            <arg name="robot_x_pos" value="0.0"/>
+            <arg name="robot_y_pos" value="0.0"/>
+            <arg name="robot_z_pos" value="0.0"/>
+            <arg name="robot_yaw"   value="0"/>
+            <arg name="robot_name" value="tb3_0"/>
+        </include>
+         <!-- 放置机器人 -->
+        <include file="$(find gazebo_tutorials)/launch/place_robot.launch">
+            <arg name="robot_x_pos" value="1.0"/>
+            <arg name="robot_y_pos" value="0.0"/>
+            <arg name="robot_z_pos" value="0.0"/>
+            <arg name="robot_yaw"   value="0"/>
+            <arg name="robot_name" value="tb3_1"/>
+        </include>
+    </group>
+
+    <!-- 导入地图 -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find gazebo_tutorials)/map/map.yaml" output="screen">
+        <!-- <param name="frame_id" value="/map"/> -->
+    </node>
+
+    <!-- amcl定位-->
+    <include file="$(find gazebo_tutorials)/launch/amcl.launch" >
+        <arg name="ns" value="tb3_0" />
+    </include>
+    <include file="$(find gazebo_tutorials)/launch/amcl.launch" >
+        <arg name="ns" value="tb3_1" />
+    </include>
+
+  <!-- move_base导航-->
+  <include file="$(find gazebo_tutorials)/launch/move_base.launch">
+    <arg name="ns" value="tb3_0" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include> 
+    <include file="$(find gazebo_tutorials)/launch/move_base.launch">
+    <arg name="ns" value="tb3_1" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include> 
+
+
+    <!-- rviz -->
+    <include file="$(find gazebo_tutorials)/launch/rviz_two_robots.launch" />
+
+</launch>

@@ -1,0 +1,53 @@
+<launch>
+    <!--SLAM算法 -->
+    <arg name="slam_method" default="gmapping"/>
+    <arg name="simulation" default="true"/>
+
+    <group if="$(arg simulation)" >
+        <!-- 开启仿真世界 -->
+        <include file="$(find gazebo_tutorials)/launch/create_world.launch" />
+         <!-- 放置机器人 -->
+        <include file="$(find gazebo_tutorials)/launch/place_robot.launch">
+            <arg name="robot_x_pos" value="0.0"/>
+            <arg name="robot_y_pos" value="0.0"/>
+            <arg name="robot_z_pos" value="0.0"/>
+            <arg name="robot_yaw"   value="0.0"/>
+            <arg name="robot_name" value="tb3_0"/>
+        </include>
+         <!-- 放置机器人 -->
+        <include file="$(find gazebo_tutorials)/launch/place_robot.launch">
+            <arg name="robot_x_pos" value="0.5"/>
+            <arg name="robot_y_pos" value="0.0"/>
+            <arg name="robot_z_pos" value="0.0"/>
+            <arg name="robot_yaw"   value="0.0"/>
+            <arg name="robot_name" value="tb3_1"/>
+        </include>
+    </group>
+    <!-- 开启SLAM -->
+    <include file="$(find gazebo_tutorials)/slam_methods/$(arg slam_method).launch">
+        <arg name="ns" value="tb3_0"/>
+    </include>
+    <include file="$(find gazebo_tutorials)/slam_methods/$(arg slam_method).launch">
+        <arg name="ns" value="tb3_1"/>
+    </include>
+
+    <!-- 启动地图融合节点并加入1号机器人地图信息 -->
+     <include file="$(find gazebo_tutorials)/launch/map_merging.launch">
+        <arg name="if_first_robot" value="True"/>
+        <arg name="robot_x_pos" value="0.0"/>
+        <arg name="robot_y_pos" value="0.0"/>
+        <arg name="robot_z_pos" value="0.0"/>
+        <arg name="robot_name" value="tb3_0"/>
+    </include>
+    <!-- 加入2号机器人地图信息 -->
+    <include file="$(find gazebo_tutorials)/launch/map_merging.launch">
+        <arg name="if_first_robot" value="False"/>
+        <arg name="robot_x_pos" value="0.5"/>
+        <arg name="robot_y_pos" value="0.0"/>
+        <arg name="robot_z_pos" value="0.0"/>
+        <arg name="robot_name" value="tb3_1"/>
+    </include>   
+
+    <!-- rviz -->
+    <include file="$(find gazebo_tutorials)/launch/rviz_two_robots.launch" />
+</launch>
