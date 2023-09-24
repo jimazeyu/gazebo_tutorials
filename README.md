@@ -1,11 +1,11 @@
 # gazebo_tutorials
 
 #### 介绍
-这是一段比较完整的教程。将分为四篇文章四部分内容：
-- 搭建gazebo仿真环境，并且在虚拟环境中运行slam算法，保存环境地图
-- 使用map_merge，多个机器人同时slam建图
-- 使用map_server打开保存的地图，并且使acml定位和move_base进行自主导航
-- 使用explore_lite功能包实现机器人边自主导航，边构建地图
+This is a relatively comprehensive tutorial. It will be divided into four articles covering four topics:
+- Setting up the Gazebo simulation environment and running the SLAM algorithm in a virtual environment to save the environmental map.
+- Using map_merge, multiple robots perform SLAM mapping simultaneously.
+- Using map_server to open the saved map, and using acml for positioning and move_base for autonomous navigation.
+- Utilizing the explore_lite package to enable the robot to autonomously navigate and build maps simultaneously.
 
 
 #### 使用说明
